@@ -2,12 +2,13 @@ package com.example.todolist.RoomDatabase
 
 import androidx.core.content.contentValuesOf
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TodoItemDao {
 
     @Query("SELECT * FROM todo_table")
-    fun getAll(): List<TodoItem>
+    fun getAll(): MutableList<TodoItem>
 
 
     @Query("SELECT * FROM todo_table WHERE id LIKE :id LIMIT 1")

@@ -10,7 +10,6 @@ abstract class TodoDataBase : RoomDatabase() {
     abstract fun todoItemDao(): TodoItemDao
 
     companion object {
-
         @Volatile
          var databaseInstance: TodoDataBase? = null
 
@@ -29,8 +28,6 @@ abstract class TodoDataBase : RoomDatabase() {
                 databaseInstance = instance
                 return instance
             }
-
         }
-
     }
 }
