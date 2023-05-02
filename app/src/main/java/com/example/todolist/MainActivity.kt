@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Insert
 import androidx.room.Room
@@ -18,6 +20,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 
+
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var appDataBase: TodoDataBase
@@ -25,25 +28,25 @@ class MainActivity : AppCompatActivity() {
     lateinit var adapter: TodoAdapter
     lateinit var bottomSheetDialog: BottomSheetDialog
     lateinit var databaseList : MutableList<TodoItem>
+    lateinit var taskViewModel : TaskViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        taskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
         supportActionBar?.hide()
 
         todoList = mutableListOf<TodoItem>()
 
-
-         appDataBase = TodoDataBase.getDatabase(this)
+        appDataBase = TodoDataBase.getDatabase(this)
         GlobalScope.launch {
                var databaseList = async{ appDataBase.todoItemDao().getAll() }
                 Log.d("databaseList", databaseList.toString())
                 todoList = databaseList.await()
                 adapter.setTask(todoList)
         }
-
 
          Log.d("Todolist", todoList.toString())
 
@@ -57,16 +60,18 @@ class MainActivity : AppCompatActivity() {
 
         loadData()
 
-        binding.fab.setOnClickListener {
-            writeData()
+        binding.fab.setOnClickListener{
+            BottomSheetDialog().show(supportFragmentManager, "newTextTask")
         }
+        taskViewModel.title.observe(this, Observer { data ->
+            writeData(data.toString())
+        })
     }
 
-    fun writeData() {
-        val taskTitle = findViewById<EditText>(R.id.newTask)
+    fun writeData(newTask : String) {
 
-        if (taskTitle != null) {
-            var newTask = TodoItem(0, taskTitle.text.toString(), 0)
+        if (newTask != null) {
+            var newTask = TodoItem(0, newTask,0)
 
             GlobalScope.launch {
                 appDataBase.todoItemDao().insert(newTask)
@@ -87,4 +92,5 @@ class MainActivity : AppCompatActivity() {
 
         adapter.setTask(todoList)
     }
+
 }

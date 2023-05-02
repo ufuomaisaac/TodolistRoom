@@ -42,12 +42,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:backgroundTint="@color/holo_green_dark"/>
 
-    <EditText
-        android:id="@+id/newTask"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/fab"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerView" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
