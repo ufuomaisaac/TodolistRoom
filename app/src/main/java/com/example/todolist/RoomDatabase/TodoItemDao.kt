@@ -14,7 +14,7 @@ interface TodoItemDao {
     @Query("SELECT * FROM todo_table WHERE id LIKE :id LIMIT 1")
     fun findById(id: Int): TodoItem
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(student: TodoItem)
 
     @Delete

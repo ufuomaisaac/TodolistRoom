@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
     lateinit var binding: ActivityMainBinding
     lateinit var appDataBase: TodoDataBase
     lateinit var todoList: MutableList<TodoItem>
@@ -42,10 +42,11 @@ class MainActivity : AppCompatActivity() {
 
         appDataBase = TodoDataBase.getDatabase(this)
         GlobalScope.launch {
-               var databaseList = async{ appDataBase.todoItemDao().getAll() }
-                Log.d("databaseList", databaseList.toString())
-                todoList = databaseList.await()
-                adapter.setTask(todoList)
+            var databaseList = async{ appDataBase.todoItemDao().getAll() }
+            Log.d("databaseList", databaseList.toString())
+            todoList = databaseList.await()
+           // taskViewModel.list.value = todoList
+            adapter.setTask(todoList)
         }
 
          Log.d("Todolist", todoList.toString())
@@ -53,8 +54,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        adapter = TodoAdapter(this)
+        adapter = TodoAdapter()
+        adapter.setCallback(this)
         binding.recyclerView.adapter = adapter
+
 
         Log.d("databaseList", todoList.toString())
 
@@ -66,6 +69,9 @@ class MainActivity : AppCompatActivity() {
         taskViewModel.title.observe(this, Observer { data ->
             writeData(data.toString())
         })
+      //  taskViewModel.list.observe(this, {data ->
+
+      //  })
     }
 
     fun writeData(newTask : String) {
@@ -91,6 +97,22 @@ class MainActivity : AppCompatActivity() {
         databaseList.clear()
 
         adapter.setTask(todoList)
+    }
+
+    override fun onCheckedChanged(item: TodoItem, isChecked: Boolean) {
+        val newStatus = if (isChecked) 1 else 0
+        val newItem = item.copy(
+            status = newStatus
+        )
+//        val newTodo = TodoItem(
+//            id = item.id,
+//            title = item.title,
+//            status = newStatus,
+//        )
+
+        GlobalScope.launch {
+            appDataBase.todoItemDao().insert(newItem)
+        }
     }
 
 }
