@@ -32,7 +32,6 @@ class BottomSheetDialog() : BottomSheetDialogFragment() {
         binding.saveButton.setOnClickListener {
             saveData()
         }
-
     }
 
     fun saveData() {

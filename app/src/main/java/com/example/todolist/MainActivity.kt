@@ -69,9 +69,6 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         taskViewModel.title.observe(this, Observer { data ->
             writeData(data.toString())
         })
-      //  taskViewModel.list.observe(this, {data ->
-
-      //  })
     }
 
     fun writeData(newTask : String) {

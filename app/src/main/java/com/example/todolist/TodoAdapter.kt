@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.RoomDatabase.TodoItem
 import javax.security.auth.callback.Callback
@@ -17,7 +18,6 @@ class TodoAdapter() : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
     private var callback: Callback? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
-        Log.d("MainActivity", "onCreateViewHolder")
         var view = LayoutInflater.from(parent.context)
             .inflate(R.layout.itemtodo, parent, false)
         return viewHolder(view)
@@ -33,17 +33,15 @@ class TodoAdapter() : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
         holder.isDone.text = itemTodo.title
         holder.isDone.isChecked = itemTodo.status == 1
 
-        holder.isDone.setOnCheckedChangeListener { _, newCheckState ->
-            callback?.onCheckedChanged(itemTodo, newCheckState)
+        holder.isDone.setOnCheckedChangeListener { _, isChecked ->
+            callback?.onCheckedChanged(itemTodo, isChecked)
         }
 
-        Log.d("MainActivity", "onBindViewHolder")
 
     }
 
 
     override fun getItemCount(): Int {
-        Log.d("MainActivity", "getItemCount")
         return listTodo.size
 
     }
