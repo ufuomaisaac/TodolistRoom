@@ -1,14 +1,12 @@
-package com.example.todolist
+package com.example.todolist.others
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todolist.R
 import com.example.todolist.RoomDatabase.TodoItem
-import javax.security.auth.callback.Callback
 
 class TodoAdapter() : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
 

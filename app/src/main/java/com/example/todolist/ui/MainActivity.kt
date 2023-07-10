@@ -1,24 +1,19 @@
-package com.example.todolist
+package com.example.todolist.ui
 
-import android.app.appsearch.GlobalSearchSession
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Insert
-import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.example.todolist.RoomDatabase.TodoDataBase
 import com.example.todolist.RoomDatabase.TodoItem
-import com.example.todolist.RoomDatabase.TodoItemDao
+import com.example.todolist.TaskViewModel
+import com.example.todolist.others.TodoAdapter
 import com.example.todolist.databinding.ActivityMainBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlin.system.measureTimeMillis
 
 
 class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
