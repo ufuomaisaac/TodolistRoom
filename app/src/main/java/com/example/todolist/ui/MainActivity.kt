@@ -1,24 +1,23 @@
-package com.example.todolist
+package com.example.todolist.ui
 
-import android.app.appsearch.GlobalSearchSession
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.*
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.Insert
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.todolist.RoomDatabase.TodoDataBase
-import com.example.todolist.RoomDatabase.TodoItem
-import com.example.todolist.RoomDatabase.TodoItemDao
+import com.example.todolist.data.db.TodoDataBase
+import com.example.todolist.data.db.entities.TodoItem
+import com.example.todolist.data.repository.TodoRepository
+import com.example.todolist.others.TodoAdapter
 import com.example.todolist.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlin.system.measureTimeMillis
 
 
 class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
@@ -35,40 +34,50 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        taskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+        appDataBase = TodoDataBase.getDatabase(this)
+        val repository = TodoRepository(appDataBase)
+        val factory = TodoViewModelFactory(repository)
+        taskViewModel = ViewModelProvider(this, factory).get(TaskViewModel::class.java)
         supportActionBar?.hide()
 
-        todoList = mutableListOf<TodoItem>()
 
-        appDataBase = TodoDataBase.getDatabase(this)
-        GlobalScope.launch {
-            var databaseList = async{ appDataBase.todoItemDao().getAll() }
-            Log.d("databaseList", databaseList.toString())
-            todoList = databaseList.await()
+
+        //CoroutineScope(Dispatchers.IO).launch {
+        //    var databaseList = async{ appDataBase.todoItemDao().getAll() }
+        //    Log.d("databaseList", databaseList.toString())
+         //   todoList = databaseList.await()
            // taskViewModel.list.value = todoList
-            adapter.setTask(todoList)
-        }
+        //    adapter.setTask(todoList)
+       // }
 
-         Log.d("Todolist", todoList.toString())
+
+
+
+        // Log.d("Todolist", todoList.toString())
 
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-
         adapter = TodoAdapter()
         adapter.setCallback(this)
         binding.recyclerView.adapter = adapter
 
+        taskViewModel.list.observe(this, Observer { data ->
+            todoList = data
+            Log.d("Todolist", todoList.toString())
+            adapter.setTask(todoList)
+        })
 
-        Log.d("databaseList", todoList.toString())
 
-        loadData()
+       // Log.d("databaseList", todoList.toString())
+
+        //loadData()
 
         binding.fab.setOnClickListener{
             BottomSheetDialog().show(supportFragmentManager, "newTextTask")
         }
-        taskViewModel.title.observe(this, Observer { data ->
-            writeData(data.toString())
-        })
+        //taskViewModel.title.observe(this, Observer { data ->
+        //writeData(data.toString())
+       // })
     }
 
     fun writeData(newTask : String) {
@@ -76,7 +85,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         if (newTask != null) {
             var newTask = TodoItem(0, newTask,0)
 
-            GlobalScope.launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 appDataBase.todoItemDao().insert(newTask)
             }
             todoList.add(newTask)
@@ -87,7 +96,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         adapter.setTask(todoList)
     }
     fun deleteAll() {
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             appDataBase.todoItemDao().deleteAll()
         }
         this.todoList.clear()
@@ -107,9 +116,8 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
 //            status = newStatus,
 //        )
 
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             appDataBase.todoItemDao().insert(newItem)
         }
     }
-
 }

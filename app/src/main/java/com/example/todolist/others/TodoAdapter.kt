@@ -1,18 +1,17 @@
-package com.example.todolist
+package com.example.todolist.others
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.example.todolist.RoomDatabase.TodoItem
-import javax.security.auth.callback.Callback
+import com.example.todolist.R
+import com.example.todolist.data.db.entities.TodoItem
 
 class TodoAdapter() : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
 
-    lateinit var listTodo: MutableList<TodoItem>
+    var listTodo: List<TodoItem>  = emptyList()
 
     // A callback that gets invoked when an item is checked (or unchecked)
     private var callback: Callback? = null
@@ -56,7 +55,7 @@ class TodoAdapter() : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
     }
 
 
-    fun setTask(list: MutableList<TodoItem>) {
+    fun setTask( list: List<TodoItem>) {
         this.listTodo = list
         notifyDataSetChanged()
         notifyItemInserted(listTodo.size - 1)

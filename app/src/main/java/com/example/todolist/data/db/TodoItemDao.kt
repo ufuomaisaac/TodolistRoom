@@ -1,18 +1,15 @@
-package com.example.todolist.RoomDatabase
+package com.example.todolist.data.db
 
-import androidx.core.content.contentValuesOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
+import com.example.todolist.data.db.entities.TodoItem
 
 @Dao
 interface TodoItemDao {
 
     @Query("SELECT * FROM todo_table")
-    fun getAll(): MutableList<TodoItem>
-
-
-    @Query("SELECT * FROM todo_table WHERE id LIKE :id LIMIT 1")
-    fun findById(id: Int): TodoItem
+    fun getAll(): LiveData<MutableList<TodoItem>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(student: TodoItem)

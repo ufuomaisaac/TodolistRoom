@@ -1,21 +1,12 @@
-package com.example.todolist
+package com.example.todolist.ui
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import com.example.todolist.RoomDatabase.TodoDataBase
-import com.example.todolist.RoomDatabase.TodoItem
 import com.example.todolist.databinding.NewTaskBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class BottomSheetDialog() : BottomSheetDialogFragment() {
     lateinit var taskViewModel: TaskViewModel
