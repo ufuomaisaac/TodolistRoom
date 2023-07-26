@@ -20,7 +20,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
-class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
+class MainActivity : AppCompatActivity(){
     lateinit var binding: ActivityMainBinding
     lateinit var appDataBase: TodoDataBase
     lateinit var todoList: MutableList<TodoItem>
@@ -41,39 +41,25 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         supportActionBar?.hide()
 
 
-
-        //CoroutineScope(Dispatchers.IO).launch {
-        //    var databaseList = async{ appDataBase.todoItemDao().getAll() }
-        //    Log.d("databaseList", databaseList.toString())
-         //   todoList = databaseList.await()
-           // taskViewModel.list.value = todoList
-        //    adapter.setTask(todoList)
-       // }
-
-
-
-
-        // Log.d("Todolist", todoList.toString())
-
-
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = TodoAdapter()
-        adapter.setCallback(this)
+      //  adapter.setCallback(this)
         binding.recyclerView.adapter = adapter
 
+        //this enables enables the
         taskViewModel.list.observe(this, Observer { data ->
             todoList = data
-            Log.d("Todolist", todoList.toString())
+            Log.d("Todolist101", todoList.toString())
             adapter.setTask(todoList)
         })
 
-
-       // Log.d("databaseList", todoList.toString())
-
-        //loadData()
-
         binding.fab.setOnClickListener{
-            BottomSheetDialog().show(supportFragmentManager, "newTextTask")
+            BottomSheetDialog(object : AddDialogListener {
+                override fun onAddButtonClicked(newTask: TodoItem) {
+                    //Log.d("MainActivity1", newTask.toString())
+                    taskViewModel.insert(newTask)
+                }
+            }).show(supportFragmentManager, "newTextTask")
         }
         //taskViewModel.title.observe(this, Observer { data ->
         //writeData(data.toString())
@@ -101,11 +87,10 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         }
         this.todoList.clear()
         databaseList.clear()
-
         adapter.setTask(todoList)
     }
 
-    override fun onCheckedChanged(item: TodoItem, isChecked: Boolean) {
+     fun onCheckedChanged(item: TodoItem, isChecked: Boolean) {
         val newStatus = if (isChecked) 1 else 0
         val newItem = item.copy(
             status = newStatus

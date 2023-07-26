@@ -7,7 +7,9 @@ import com.example.todolist.data.db.entities.TodoItem
 import com.example.todolist.data.repository.TodoRepository
 import kotlinx.coroutines.launch
 
-class TaskViewModel(repository: TodoRepository) : ViewModel() {
+class TaskViewModel(var repository: TodoRepository) : ViewModel() {
     var list = repository.getAllTodoItem()
     var title = MutableLiveData<String>()
+
+    fun insert(itemTodo : TodoItem) = viewModelScope.launch { repository.insert(itemTodo) }
 }

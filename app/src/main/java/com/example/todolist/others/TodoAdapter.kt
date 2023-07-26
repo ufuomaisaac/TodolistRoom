@@ -24,7 +24,6 @@ class TodoAdapter() : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
 
     class viewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var isDone: CheckBox = itemView.findViewById(R.id.itemCheckBox)
-
     }
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
@@ -36,10 +35,7 @@ class TodoAdapter() : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
             callback?.onCheckedChanged(itemTodo, isChecked)
         }
 
-
     }
-
-
     override fun getItemCount(): Int {
         return listTodo.size
 
