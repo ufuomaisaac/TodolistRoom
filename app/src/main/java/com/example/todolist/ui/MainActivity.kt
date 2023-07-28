@@ -52,25 +52,25 @@ class MainActivity : AppCompatActivity(){
             adapter.setTask(todoList)
         })
 
-//        binding.fab.setOnClickListener{
-//        BottomSheetDialog(object : AddDialogListener {
-//                override fun onAddButtonClicked(newTask: TodoItem) {
-//                    Log.d("MainActivity1", newTask.toString())
-//                    taskViewModel.insert(newTask)
-//                }
-//            }).show(supportFragmentManager, "newTextTask")
-//        }
-//        taskViewModel.title.observe(this, Observer { data ->
-//        writeData(data.toString())
-//       })
-
-        binding.fab.setOnClickListener {
-            TodoDialog(this@MainActivity, object : AddDialogListener{
+        binding.fab.setOnClickListener{
+        BottomSheetDialog(object : AddDialogListener {
                 override fun onAddButtonClicked(newTask: TodoItem) {
+                   Log.d("MainActivity1", newTask.toString())
                     taskViewModel.insert(newTask)
                 }
-            }).show()
+            }).show(supportFragmentManager, "newTextTask")
         }
+      taskViewModel.title.observe(this, Observer { data ->
+       writeData(data.toString())
+      })
+
+//        binding.fab.setOnClickListener {
+//            TodoDialog(this@MainActivity, object : AddDialogListener{
+//                override fun onAddButtonClicked(newTask: TodoItem) {
+//                    taskViewModel.insert(newTask)
+//                }
+//            }).show()
+//        }
     }
 
     fun writeData(newTask : String) {
