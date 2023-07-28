@@ -40,30 +40,37 @@ class MainActivity : AppCompatActivity(){
         taskViewModel = ViewModelProvider(this, factory).get(TaskViewModel::class.java)
         supportActionBar?.hide()
 
-
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = TodoAdapter()
-      //  adapter.setCallback(this)
-        binding.recyclerView.adapter = adapter
+//        adapter.setCallback(this)
+            binding.recyclerView.adapter = adapter
 
-        //this enables enables the
+//        this enables enables the
         taskViewModel.list.observe(this, Observer { data ->
             todoList = data
             Log.d("Todolist101", todoList.toString())
             adapter.setTask(todoList)
         })
 
-        binding.fab.setOnClickListener{
-            BottomSheetDialog(object : AddDialogListener {
+//        binding.fab.setOnClickListener{
+//        BottomSheetDialog(object : AddDialogListener {
+//                override fun onAddButtonClicked(newTask: TodoItem) {
+//                    Log.d("MainActivity1", newTask.toString())
+//                    taskViewModel.insert(newTask)
+//                }
+//            }).show(supportFragmentManager, "newTextTask")
+//        }
+//        taskViewModel.title.observe(this, Observer { data ->
+//        writeData(data.toString())
+//       })
+
+        binding.fab.setOnClickListener {
+            TodoDialog(this@MainActivity, object : AddDialogListener{
                 override fun onAddButtonClicked(newTask: TodoItem) {
-                    //Log.d("MainActivity1", newTask.toString())
                     taskViewModel.insert(newTask)
                 }
-            }).show(supportFragmentManager, "newTextTask")
+            }).show()
         }
-        //taskViewModel.title.observe(this, Observer { data ->
-        //writeData(data.toString())
-       // })
     }
 
     fun writeData(newTask : String) {
