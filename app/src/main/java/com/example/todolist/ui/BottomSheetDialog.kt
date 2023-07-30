@@ -45,7 +45,7 @@ class BottomSheetDialog(var addDialogListener: AddDialogListener) : BottomSheetD
         Log.d("MainActivity1", "withinsavebutton")
         val newTask = TodoItem(0,name, 0)
         addDialogListener.onAddButtonClicked(newTask)
-        Log.d("MainActivity1", newTask.toString())
+        Log.d("MainActivity1", newTask.toString() + " InSide SaveData function")
         dismiss()
     }
 }

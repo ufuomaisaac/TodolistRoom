@@ -55,14 +55,14 @@ class MainActivity : AppCompatActivity(){
         binding.fab.setOnClickListener{
         BottomSheetDialog(object : AddDialogListener {
                 override fun onAddButtonClicked(newTask: TodoItem) {
-                   Log.d("MainActivity1", newTask.toString())
+                   Log.d("MainActivity1", newTask.toString() + "interface connector")
                     taskViewModel.insert(newTask)
                 }
             }).show(supportFragmentManager, "newTextTask")
         }
-      taskViewModel.title.observe(this, Observer { data ->
-       writeData(data.toString())
-      })
+//      taskViewModel.title.observe(this, Observer { data ->
+//       writeData(data.toString())
+//      })
 
 //        binding.fab.setOnClickListener {
 //            TodoDialog(this@MainActivity, object : AddDialogListener{
