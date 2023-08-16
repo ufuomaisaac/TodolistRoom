@@ -20,13 +20,12 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity(), TodoAdapter.Callback{
     lateinit var binding: ActivityMainBinding
     lateinit var appDataBase: TodoDataBase
     lateinit var todoList: MutableList<TodoItem>
     lateinit var adapter: TodoAdapter
     lateinit var bottomSheetDialog: BottomSheetDialog
-    lateinit var databaseList : MutableList<TodoItem>
     lateinit var taskViewModel : TaskViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +41,8 @@ class MainActivity : AppCompatActivity(){
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = TodoAdapter()
-//        adapter.setCallback(this)
-            binding.recyclerView.adapter = adapter
+        adapter.setCallback(this)
+        binding.recyclerView.adapter = adapter
 
 //        this enables enables the
         taskViewModel.list.observe(this, Observer { data ->
@@ -53,12 +52,12 @@ class MainActivity : AppCompatActivity(){
         })
 
         binding.fab.setOnClickListener{
-        BottomSheetDialog(object : AddDialogListener {
+          BottomSheetDialog(object : AddDialogListener {
                 override fun onAddButtonClicked(newTask: TodoItem) {
-                   Log.d("MainActivity1", newTask.toString() + "interface connector")
+                    Log.d("MainActivity1", newTask.toString() + "interface connector")
                     taskViewModel.insert(newTask)
                 }
-            }).show(supportFragmentManager, "newTextTask")
+          }).show(supportFragmentManager, "newTextTask")
         }
 //      taskViewModel.title.observe(this, Observer { data ->
 //       writeData(data.toString())
@@ -93,11 +92,13 @@ class MainActivity : AppCompatActivity(){
             appDataBase.todoItemDao().deleteAll()
         }
         this.todoList.clear()
-        databaseList.clear()
         adapter.setTask(todoList)
     }
+    fun delete(todoItem: TodoItem) {
+        taskViewModel.delete(todoItem)
+    }
 
-     fun onCheckedChanged(item: TodoItem, isChecked: Boolean) {
+     override fun onCheckedChanged(item: TodoItem, isChecked: Boolean) {
         val newStatus = if (isChecked) 1 else 0
         val newItem = item.copy(
             status = newStatus

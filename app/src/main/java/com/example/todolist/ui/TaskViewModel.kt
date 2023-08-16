@@ -10,7 +10,11 @@ import kotlinx.coroutines.launch
 
 class TaskViewModel(var repository: TodoRepository) : ViewModel() {
     var list = repository.getAllTodoItem()
-    var title = MutableLiveData<String>()
 
     fun insert(itemTodo : TodoItem) = viewModelScope.launch(context = Dispatchers.IO) { repository.insert(itemTodo) }
+
+    fun deleteAll() = viewModelScope.launch(context = Dispatchers.IO) { repository.deleteAll() }
+
+    fun delete(itemTodo: TodoItem) = viewModelScope.launch(context = Dispatchers.IO) { repository.delete(itemTodo) }
+
 }
