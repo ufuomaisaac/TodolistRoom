@@ -3,6 +3,7 @@ package com.example.todolist.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -103,14 +104,15 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback{
         val newItem = item.copy(
             status = newStatus
         )
-//        val newTodo = TodoItem(
-//            id = item.id,
-//            title = item.title,
-//            status = newStatus,
-//        )
-
+////        val newTodo = TodoItem(
+////            id = item.id,
+////            title = item.title,
+////            status = newStatus,
+////        )
+//
         CoroutineScope(Dispatchers.IO).launch {
             appDataBase.todoItemDao().insert(newItem)
         }
     }
+
 }
