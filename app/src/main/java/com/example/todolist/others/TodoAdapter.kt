@@ -10,8 +10,9 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 import com.example.todolist.data.db.entities.TodoItem
+import com.example.todolist.ui.TaskViewModel
 
-class TodoAdapter() : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
+class TodoAdapter(var taskViewModel: TaskViewModel) : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
 
     var listTodo: List<TodoItem>  = emptyList()
     // A callback that gets invoked when an item is checked (or unchecked)
@@ -80,5 +81,17 @@ class TodoAdapter() : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
         this.listTodo = list
         notifyDataSetChanged()
         notifyItemInserted(listTodo.size - 1)
+    }
+    fun deleteItem(itemPosition: Int){
+        var item = listTodo[itemPosition]
+        taskViewModel.delete(item)
+    }
+
+    fun addItem(itemPosition: Int){
+        var item = listTodo[itemPosition]
+        taskViewModel.delete(item)
+        notifyDataSetChanged()
+        taskViewModel.insert(item)
+        notifyDataSetChanged()
     }
 }

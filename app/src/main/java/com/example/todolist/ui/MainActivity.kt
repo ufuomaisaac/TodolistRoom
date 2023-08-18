@@ -7,7 +7,9 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.data.db.TodoDataBase
 import com.example.todolist.data.db.entities.TodoItem
 import com.example.todolist.data.repository.TodoRepository
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback{
         supportActionBar?.hide()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = TodoAdapter()
+        adapter = TodoAdapter(taskViewModel)
         adapter.setCallback(this)
         binding.recyclerView.adapter = adapter
 
@@ -82,9 +84,19 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback{
             status = newStatus
         )
          taskViewModel.insert(newItem)
-//        CoroutineScope(Dispatchers.IO).launch {
-//            appDataBase.todoItemDao().insert(newItem)
-//        }
     }
 
+    val swipeGesture = object : SwipeGesture() {
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            when(direction){
+                ItemTouchHelper.LEFT -> {
+
+                }
+                ItemTouchHelper.RIGHT -> {
+
+                }
+            }
+            super.onSwiped(viewHolder, direction)
+        }
+    }
 }
