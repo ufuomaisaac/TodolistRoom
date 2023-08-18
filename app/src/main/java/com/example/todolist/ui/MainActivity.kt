@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback{
         adapter.setCallback(this)
         binding.recyclerView.adapter = adapter
 
-//        this enables enables the
+
         taskViewModel.list.observe(this, Observer { data ->
             todoList = data
             Log.d("Todolist101", todoList.toString())
@@ -60,31 +60,8 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback{
                 }
           }).show(supportFragmentManager, "newTextTask")
         }
-//      taskViewModel.title.observe(this, Observer { data ->
-//       writeData(data.toString())
-//      })
-
-//        binding.fab.setOnClickListener {
-//            TodoDialog(this@MainActivity, object : AddDialogListener{
-//                override fun onAddButtonClicked(newTask: TodoItem) {
-//                    taskViewModel.insert(newTask)
-//                }
-//            }).show()
-//        }
     }
 
-    fun writeData(newTask : String) {
-
-        if (newTask != null) {
-            var newTask = TodoItem(0, newTask,0)
-
-            CoroutineScope(Dispatchers.IO).launch {
-                appDataBase.todoItemDao().insert(newTask)
-            }
-            todoList.add(newTask)
-            adapter.setTask(todoList)
-        }
-    }
     fun loadData() {
         adapter.setTask(todoList)
     }
@@ -104,15 +81,10 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback{
         val newItem = item.copy(
             status = newStatus
         )
-////        val newTodo = TodoItem(
-////            id = item.id,
-////            title = item.title,
-////            status = newStatus,
-////        )
-//
-        CoroutineScope(Dispatchers.IO).launch {
-            appDataBase.todoItemDao().insert(newItem)
-        }
+         taskViewModel.insert(newItem)
+//        CoroutineScope(Dispatchers.IO).launch {
+//            appDataBase.todoItemDao().insert(newItem)
+//        }
     }
 
 }
