@@ -87,11 +87,10 @@ class TodoAdapter(var taskViewModel: TaskViewModel) : RecyclerView.Adapter<TodoA
         taskViewModel.delete(item)
     }
 
-    fun addItem(itemPosition: Int){
+    fun addItem(itemPosition: Int, item: TodoItem){
         var item = listTodo[itemPosition]
         taskViewModel.delete(item)
-        notifyDataSetChanged()
-        taskViewModel.insert(item)
-        notifyDataSetChanged()
+        val newItem = TodoItem(0 , item.title, item.status)
+        taskViewModel.insert(newItem)
     }
 }

@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback{
         adapter.setCallback(this)
         binding.recyclerView.adapter = adapter
 
+        var itemTouchHelper = ItemTouchHelper(swipeGesture)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
         taskViewModel.list.observe(this, Observer { data ->
             todoList = data
@@ -86,17 +88,19 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback{
          taskViewModel.insert(newItem)
     }
 
-    val swipeGesture = object : SwipeGesture() {
+    val swipeGesture = object : SwipeGesture(this@MainActivity) {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             when(direction){
                 ItemTouchHelper.LEFT -> {
-
+                    adapter.deleteItem(viewHolder.absoluteAdapterPosition)
                 }
-                ItemTouchHelper.RIGHT -> {
 
+                ItemTouchHelper.RIGHT -> {
+                    val archiveItem = todoList[viewHolder.absoluteAdapterPosition]
+                    adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                    adapter.addItem(viewHolder.absoluteAdapterPosition, archiveItem)
                 }
             }
-            super.onSwiped(viewHolder, direction)
         }
     }
 }
