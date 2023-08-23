@@ -14,7 +14,8 @@ import com.example.todolist.ui.TaskViewModel
 
 class TodoAdapter(var taskViewModel: TaskViewModel) : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
 
-    var listTodo: List<TodoItem>  = emptyList()
+    var listTodo: List<TodoItem> = emptyList()
+
     // A callback that gets invoked when an item is checked (or unchecked)
     lateinit var myCallback: Callback
 
@@ -24,18 +25,21 @@ class TodoAdapter(var taskViewModel: TaskViewModel) : RecyclerView.Adapter<TodoA
         return viewHolder(view)
     }
 
-    inner class viewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener  {
+    inner class viewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
 
         var isDone: CheckBox = itemView.findViewById(R.id.itemCheckBox)
+
         init {
             isDone.setOnClickListener(this)
         }
+
         override fun onClick(p0: View?) {
 
             val itemPosition = absoluteAdapterPosition
             val isCheckedStatus = isDone.isChecked
             Log.d("MainActivity", itemPosition.toString())
-            if(itemPosition != RecyclerView.NO_POSITION) {
+            if (itemPosition != RecyclerView.NO_POSITION) {
                 val currentItem = listTodo[itemPosition]
                 Log.d("MainActivity", currentItem.toString())
                 myCallback?.onCheckedChanged(currentItem, isCheckedStatus)
@@ -57,6 +61,7 @@ class TodoAdapter(var taskViewModel: TaskViewModel) : RecyclerView.Adapter<TodoA
 //        }
 
     }
+
     override fun getItemCount(): Int {
         return listTodo.size
 
@@ -77,20 +82,21 @@ class TodoAdapter(var taskViewModel: TaskViewModel) : RecyclerView.Adapter<TodoA
     }
 
 
-    fun setTask( list: List<TodoItem>) {
+    fun setTask(list: List<TodoItem>) {
         this.listTodo = list
         notifyDataSetChanged()
         notifyItemInserted(listTodo.size - 1)
     }
-    fun deleteItem(itemPosition: Int){
-        var item = listTodo[itemPosition]
-        taskViewModel.delete(item)
+
+    fun deleteItem(itemPosition: Int) {
+//        var item = listTodo[itemPosition]
+//        taskViewModel.delete(item)
     }
 
-    fun addItem(itemPosition: Int, item: TodoItem){
-        var item = listTodo[itemPosition]
-        taskViewModel.delete(item)
-        val newItem = TodoItem(0 , item.title, item.status)
-        taskViewModel.insert(newItem)
+    fun addItem(itemPosition: Int, item: TodoItem) {
+//        val item = listTodo[itemPosition]
+//        taskViewModel.delete(item)
+//        val newItem = TodoItem(0 , item.title, item.status)
+//        taskViewModel.insert(newItem)
     }
 }

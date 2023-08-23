@@ -22,6 +22,10 @@ abstract class SwipeGesture(context: Context): ItemTouchHelper.SimpleCallback(0,
         return false
     }
 
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        TODO("Not yet implemented")
+    }
+
     open fun onChildDraw(
         c: Canvas?,
         recyclerView: RecyclerView?,

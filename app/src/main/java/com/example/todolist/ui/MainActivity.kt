@@ -33,22 +33,23 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         appDataBase = TodoDataBase.getDatabase(this)
         val repository = TodoRepository(appDataBase)
         val factory = TodoViewModelFactory(repository)
         taskViewModel = ViewModelProvider(this, factory).get(TaskViewModel::class.java)
         supportActionBar?.hide()
 
+        var itemTouchHelper = ItemTouchHelper(swipeGesture)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = TodoAdapter(taskViewModel)
         adapter.setCallback(this)
         binding.recyclerView.adapter = adapter
 
-        var itemTouchHelper = ItemTouchHelper(swipeGesture)
-        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
         taskViewModel.list.observe(this, Observer { data ->
             todoList = data
