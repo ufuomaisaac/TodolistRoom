@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
     lateinit var todoList: MutableList<TodoItem>
     lateinit var adapter: TodoAdapter
     lateinit var bottomSheetDialog: BottomSheetDialog
-    lateinit var taskViewModel : TaskViewModel
+    lateinit var taskViewModel: TaskViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         taskViewModel = ViewModelProvider(this, factory).get(TaskViewModel::class.java)
         supportActionBar?.hide()
 
-        var itemTouchHelper = ItemTouchHelper(swipeGesture)
+         var itemTouchHelper = ItemTouchHelper(swipeGesture)
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -57,19 +57,20 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
             adapter.setTask(todoList)
         })
 
-        binding.fab.setOnClickListener{
-          BottomSheetDialog(object : AddDialogListener {
+        binding.fab.setOnClickListener {
+            BottomSheetDialog(object : AddDialogListener {
                 override fun onAddButtonClicked(newTask: TodoItem) {
                     Log.d("MainActivity1", newTask.toString() + "interface connector")
                     taskViewModel.insert(newTask)
                 }
-          }).show(supportFragmentManager, "newTextTask")
+            }).show(supportFragmentManager, "newTextTask")
         }
     }
 
     fun loadData() {
         adapter.setTask(todoList)
     }
+
     fun deleteAll() {
         CoroutineScope(Dispatchers.IO).launch {
             appDataBase.todoItemDao().deleteAll()
@@ -77,31 +78,34 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         this.todoList.clear()
         adapter.setTask(todoList)
     }
+
     fun delete(todoItem: TodoItem) {
         taskViewModel.delete(todoItem)
     }
 
-     override fun onCheckedChanged(item: TodoItem, isChecked: Boolean) {
+    override fun onCheckedChanged(item: TodoItem, isChecked: Boolean) {
         val newStatus = if (isChecked) 1 else 0
         val newItem = item.copy(
             status = newStatus
         )
-         taskViewModel.insert(newItem)
+        taskViewModel.insert(newItem)
     }
 
-    val swipeGesture = object : SwipeGesture(this) {
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            when(direction){
-                ItemTouchHelper.LEFT -> {
-                    adapter.deleteItem(viewHolder.absoluteAdapterPosition)
-                }
 
-                ItemTouchHelper.RIGHT -> {
-                    val archiveItem = todoList[viewHolder.absoluteAdapterPosition]
-                    adapter.deleteItem(viewHolder.absoluteAdapterPosition)
-                    adapter.addItem(viewHolder.absoluteAdapterPosition, archiveItem)
-                }
-            }
-        }
-    }
+
+     val swipeGesture = object : SwipeGesture(this) {
+         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+             when (direction) {
+                 ItemTouchHelper.LEFT -> {
+                     adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                 }
+
+                 ItemTouchHelper.RIGHT -> {
+                     val archiveItem = todoList[viewHolder.absoluteAdapterPosition]
+                     adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                     adapter.addItem(viewHolder.absoluteAdapterPosition, archiveItem)
+                 }
+             }
+         }
+     }
 }
