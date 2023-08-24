@@ -23,7 +23,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 
-class MainActivity : AppCompatActivity(), TodoAdapter.Callback{
+class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
     lateinit var binding: ActivityMainBinding
     lateinit var appDataBase: TodoDataBase
     lateinit var todoList: MutableList<TodoItem>
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback{
          taskViewModel.insert(newItem)
     }
 
-    val swipeGesture = object : SwipeGesture(this@MainActivity) {
+    val swipeGesture = object : SwipeGesture(this) {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             when(direction){
                 ItemTouchHelper.LEFT -> {

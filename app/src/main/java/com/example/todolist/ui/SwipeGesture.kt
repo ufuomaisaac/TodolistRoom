@@ -1,5 +1,7 @@
 package com.example.todolist.ui
 
+
+
 import android.content.Context
 import android.graphics.Canvas
 import androidx.core.content.ContextCompat
@@ -14,19 +16,24 @@ abstract class SwipeGesture(context: Context): ItemTouchHelper.SimpleCallback(0,
     var archiveColor = ContextCompat.getColor(context, R.color.archive_color)
     var deleteIcon = R.drawable.baseline_delete_24
     var archiveIcon =R.drawable.baseline_archive_24
-    override fun onMove(
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        target: RecyclerView.ViewHolder
-    ): Boolean {
+    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
         return false
     }
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        TODO("Not yet implemented")
+    override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+
+        RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive a)
+            .addSwipeLeftBackgroundColor(deleteColor)
+            .addSwipeLeftActionIcon(deleteIcon)
+            .addSwipeRightBackgroundColor(archiveColor)
+            .addSwipeRightActionIcon(archiveIcon)
+            .create()
+            .decorate()
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 
-    open fun onChildDraw(
+
+   /* open fun onChildDraw(
         c: Canvas?,
         recyclerView: RecyclerView?,
         viewHolder: RecyclerView.ViewHolder?,
@@ -54,5 +61,5 @@ abstract class SwipeGesture(context: Context): ItemTouchHelper.SimpleCallback(0,
             c!!, recyclerView!!,
             viewHolder!!, dX, dY, actionState, isCurrentlyActive
         )
-    }
+    }*/
 }
