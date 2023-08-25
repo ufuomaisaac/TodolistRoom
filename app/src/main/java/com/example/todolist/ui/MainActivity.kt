@@ -67,22 +67,6 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         }
     }
 
-    fun loadData() {
-        adapter.setTask(todoList)
-    }
-
-    fun deleteAll() {
-        CoroutineScope(Dispatchers.IO).launch {
-            appDataBase.todoItemDao().deleteAll()
-        }
-        this.todoList.clear()
-        adapter.setTask(todoList)
-    }
-
-    fun delete(todoItem: TodoItem) {
-        taskViewModel.delete(todoItem)
-    }
-
     override fun onCheckedChanged(item: TodoItem, isChecked: Boolean) {
         val newStatus = if (isChecked) 1 else 0
         val newItem = item.copy(

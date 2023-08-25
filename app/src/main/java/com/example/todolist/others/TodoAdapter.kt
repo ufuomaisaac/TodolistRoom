@@ -13,10 +13,7 @@ import com.example.todolist.data.db.entities.TodoItem
 import com.example.todolist.ui.TaskViewModel
 
 class TodoAdapter(var taskViewModel: TaskViewModel) : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
-
     var listTodo: List<TodoItem> = emptyList()
-
-    // A callback that gets invoked when an item is checked (or unchecked)
     lateinit var myCallback: Callback
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
@@ -35,7 +32,6 @@ class TodoAdapter(var taskViewModel: TaskViewModel) : RecyclerView.Adapter<TodoA
         }
 
         override fun onClick(p0: View?) {
-
             val itemPosition = absoluteAdapterPosition
             val isCheckedStatus = isDone.isChecked
             Log.d("MainActivity", itemPosition.toString())
@@ -64,7 +60,6 @@ class TodoAdapter(var taskViewModel: TaskViewModel) : RecyclerView.Adapter<TodoA
 
     override fun getItemCount(): Int {
         return listTodo.size
-
     }
 
     fun setCallback(callback: Callback?) {
@@ -80,7 +75,6 @@ class TodoAdapter(var taskViewModel: TaskViewModel) : RecyclerView.Adapter<TodoA
     interface Callback {
         fun onCheckedChanged(item: TodoItem, ischecked: Boolean)
     }
-
 
     fun setTask(list: List<TodoItem>) {
         this.listTodo = list
