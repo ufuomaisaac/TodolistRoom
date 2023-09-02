@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.todolist.data.repository.TodoRepository
 
-class TodoViewModelFactory(private var repository: TodoRepository) :  ViewModelProvider.NewInstanceFactory() {
+class  TodoViewModelFactory(private var repository: TodoRepository) :  ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return TaskViewModel(repository) as T

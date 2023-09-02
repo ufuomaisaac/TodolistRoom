@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -81,7 +82,20 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
          override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
              when (direction) {
                  ItemTouchHelper.LEFT -> {
-                     adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                     val builder = AlertDialog.Builder(this@MainActivity)
+                     builder.setTitle("Confimation")
+                     builder.setMessage("Are you sure you want to delete this item")
+
+                     builder.setPositiveButton("Yes") { dialog, which ->
+                         adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                         dialog.dismiss()
+                     }
+                     builder.setNegativeButton("No") { dialog, which ->
+                         dialog.dismiss()
+                     }
+                     val alertDialog = builder.create()
+                     alertDialog.show()
+
                  }
 
                  ItemTouchHelper.RIGHT -> {
