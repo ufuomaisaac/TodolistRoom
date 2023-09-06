@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = TodoAdapter(taskViewModel)
+        adapter = TodoAdapter(taskViewModel)  
         adapter.setCallback(this)
         binding.recyclerView.adapter = adapter
 
