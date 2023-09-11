@@ -22,7 +22,7 @@ abstract class SwipeGesture(val context: Context): ItemTouchHelper.SimpleCallbac
         var deleteColor = ContextCompat.getColor(context, R.color.delete_color)
         val deleteIcon = R.drawable.delete_24
         val archiveColor = ContextCompat.getColor(context, R.color.archive_color)
-        val archiveIcon = R.drawable.archive_24
+        val archiveIcon = R.drawable.baseline_edit_24
         RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             .addSwipeRightBackgroundColor(archiveColor)
             .addSwipeRightActionIcon(archiveIcon)

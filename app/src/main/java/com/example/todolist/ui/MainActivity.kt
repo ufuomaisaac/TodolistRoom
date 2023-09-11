@@ -4,9 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -18,13 +15,10 @@ import com.example.todolist.data.db.entities.TodoItem
 import com.example.todolist.data.repository.TodoRepository
 import com.example.todolist.others.TodoAdapter
 import com.example.todolist.databinding.ActivityMainBinding
+import com.example.todolist.ui.Dialog.AddDialogListener
+import com.example.todolist.ui.Dialog.BottomSheetDialog
+import com.example.todolist.ui.Dialog.CustomDialogFragment
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
@@ -96,7 +90,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
 
                      builder.setPositiveButton("Yes") { dialog, which ->
                          adapter.deleteItem(viewHolder.absoluteAdapterPosition)
-                         dialog.dismiss()
+                         dialog.dismiss()item
                      }
                      builder.setNegativeButton("No") { dialog, which ->
                          dialog.dismiss()
@@ -107,9 +101,14 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
                  }
 
                  ItemTouchHelper.RIGHT -> {
-                     val archiveItem = todoList[viewHolder.absoluteAdapterPosition]
+                   /*  val archiveItem = todoList[viewHolder.absoluteAdapterPosition]
                      adapter.deleteItem(viewHolder.absoluteAdapterPosition)
-                     adapter.addItem(viewHolder.absoluteAdapterPosition, archiveItem)
+                     adapter.addItem(viewHolder.absoluteAdapterPosition, archiveItem)*/
+                     val currentItem = adapter.addItem((viewHolder.absoluteAdapterPosition))
+                     val customDialog = CustomDialogFragment()
+                     customDialog.show(supportFragmentManager, "customDialog")
+
+
 
                  }
              }
