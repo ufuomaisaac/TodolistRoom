@@ -3,6 +3,7 @@ package com.example.todolist.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LiveData
@@ -11,11 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todolist.R
 import com.example.todolist.data.db.TodoDataBase
 import com.example.todolist.data.db.entities.TodoItem
 import com.example.todolist.data.repository.TodoRepository
 import com.example.todolist.others.TodoAdapter
 import com.example.todolist.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -82,7 +85,12 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
          override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
              when (direction) {
                  ItemTouchHelper.LEFT -> {
-                     val builder = AlertDialog.Builder(this@MainActivity)
+                     adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                     val snackbar = Snackbar.make(binding.layout,R.string.snackbar_text, Snackbar.LENGTH_LONG)
+                         .setAction(R.string.action_button, View.OnClickListener {
+
+                         }).show()
+                     /*val builder = AlertDialog.Builder(this@MainActivity, R.style.MyDialogTheme )
                      builder.setTitle("Confimation")
                      builder.setMessage("Are you sure you want to delete this item")
 
@@ -94,7 +102,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
                          dialog.dismiss()
                      }
                      val alertDialog = builder.create()
-                     alertDialog.show()
+                     alertDialog.show()*/
 
                  }
 
@@ -102,6 +110,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
                      val archiveItem = todoList[viewHolder.absoluteAdapterPosition]
                      adapter.deleteItem(viewHolder.absoluteAdapterPosition)
                      adapter.addItem(viewHolder.absoluteAdapterPosition, archiveItem)
+
                  }
              }
          }

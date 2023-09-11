@@ -18,35 +18,18 @@ abstract class SwipeGesture(val context: Context): ItemTouchHelper.SimpleCallbac
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
     }
 
-    override fun onChildDraw(
-        c: Canvas,
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        dX: Float,
-        dY: Float,
-        actionState: Int,
-        isCurrentlyActive: Boolean
-    ) {
+    override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         var deleteColor = ContextCompat.getColor(context, R.color.delete_color)
         val deleteIcon = R.drawable.delete_24
         val archiveColor = ContextCompat.getColor(context, R.color.archive_color)
         val archiveIcon = R.drawable.archive_24
-        RecyclerViewSwipeDecorator.Builder(
-            c,
-            recyclerView,
-            viewHolder,
-            dX,
-            dY,
-            actionState,
-            isCurrentlyActive
-        )
+        RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             .addSwipeRightBackgroundColor(archiveColor)
             .addSwipeRightActionIcon(archiveIcon)
             .addSwipeLeftBackgroundColor(deleteColor)
             .addSwipeLeftActionIcon(deleteIcon)
             .create()
             .decorate()
-
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 }

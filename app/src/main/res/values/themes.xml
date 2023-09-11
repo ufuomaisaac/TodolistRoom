@@ -13,4 +13,7 @@
         <item name="android:statusBarColor">@color/holo_green_dark</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/holo_green_dark</item>
+    </style>
 </resources>
