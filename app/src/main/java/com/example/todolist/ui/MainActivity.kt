@@ -85,10 +85,10 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
          override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
              when (direction) {
                  ItemTouchHelper.LEFT -> {
-                     adapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                     val item = adapter.deleteItem(viewHolder.absoluteAdapterPosition)
                      val snackbar = Snackbar.make(binding.layout,R.string.snackbar_text, Snackbar.LENGTH_LONG)
                          .setAction(R.string.action_button, View.OnClickListener {
-
+                             taskViewModel.insert(item)
                          }).show()
                      /*val builder = AlertDialog.Builder(this@MainActivity, R.style.MyDialogTheme )
                      builder.setTitle("Confimation")
