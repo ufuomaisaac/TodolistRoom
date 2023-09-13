@@ -14,33 +14,25 @@ class EditDialogFragment(private var taskViewModel: TaskViewModel, var currentIt
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
 
-        // Set the custom layout for the dialog
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.edit_dialog, null)
         val editText = view.findViewById<EditText>(R.id.editText)
-
         editText.setText(currentItemTodo.title)
 
-        builder.setView(view) // Set the custom layout as the dialog's content
-            .setTitle("Edit Item Dialog") // Set the dialog title
+        builder.setView(view)
+            .setTitle("Edit Task")
             .setPositiveButton("OK") { dialog, _ ->
                 val enteredText = editText.text.toString()
                 val newItem = currentItemTodo.copy(title = enteredText)
                 taskViewModel.insert(newItem)
 
-                dialog.dismiss() // Dismiss the dialog
+                dialog.dismiss()
             }
             .setNegativeButton("Cancel") { dialog, _ ->
-                //
-                dialog.dismiss() // Dismiss the dialog
+                dialog.dismiss()
             }
 
-        return builder.create() // Create and return the dialog
+        return builder.create()
     }
-
-    /*override fun editItem(todoItem: TodoItem): String {
-        val currentItemTitle = todoItem.title
-        editTextTitle = currentItemTitle
-        return currentItemTitle
-    }*/
 }
+
