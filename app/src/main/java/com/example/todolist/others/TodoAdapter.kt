@@ -97,6 +97,7 @@ class TodoAdapter(var taskViewModel: TaskViewModel) : RecyclerView.Adapter<TodoA
         val newItem = TodoItem(0 , item.title, item.status)
         taskViewModel.insert(newItem)*/
         val currentItem = listTodo[itemPosition]
+        notifyDataSetChanged()
         return currentItem
     }
 }

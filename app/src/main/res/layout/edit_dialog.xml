@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditText
-        android:id="@+id/editTextt"
+        android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:hint="gggg"
