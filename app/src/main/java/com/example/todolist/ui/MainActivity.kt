@@ -20,8 +20,9 @@ import com.example.todolist.ui.Dialog.AddDialogListener
 import com.example.todolist.ui.Dialog.BottomSheetDialog
 import com.example.todolist.ui.Dialog.EditDialogFragment
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
     lateinit var binding: ActivityMainBinding
     lateinit var appDataBase: TodoDataBase

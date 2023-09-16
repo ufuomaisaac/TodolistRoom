@@ -5,10 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todolist.data.db.entities.TodoItem
 import com.example.todolist.data.repository.TodoRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TaskViewModel(var repository: TodoRepository) : ViewModel() {
+@HiltViewModel
+class TaskViewModel @Inject constructor(var repository: TodoRepository) : ViewModel() {
     var list = repository.getAllTodoItem()
 
     fun insert(itemTodo : TodoItem) = viewModelScope.launch(context = Dispatchers.IO) { repository.insert(itemTodo) }
