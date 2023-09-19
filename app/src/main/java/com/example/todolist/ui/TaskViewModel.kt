@@ -10,8 +10,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class TaskViewModel @Inject constructor(var repository: TodoRepository) : ViewModel() {
+
+class TaskViewModel (var repository: TodoRepository) : ViewModel() {
     var list = repository.getAllTodoItem()
 
     fun insert(itemTodo : TodoItem) = viewModelScope.launch(context = Dispatchers.IO) { repository.insert(itemTodo) }
