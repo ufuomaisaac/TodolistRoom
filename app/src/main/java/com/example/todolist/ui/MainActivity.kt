@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -14,7 +13,6 @@ import com.example.todolist.R
 import com.example.todolist.data.db.TodoDataBase
 import com.example.todolist.data.db.entities.TodoItem
 import com.example.todolist.data.repository.TodoRepository
-import com.example.todolist.others.TodoAdapter
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.ui.Dialog.AddDialogListener
 import com.example.todolist.ui.Dialog.BottomSheetDialog
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = TodoAdapter(taskViewModel)  
+        adapter = TodoAdapter(taskViewModel)
         adapter.setCallback(this)
         binding.recyclerView.adapter = adapter
 
@@ -66,7 +64,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         }
     }
 
-    override fun onCheckedChanged(item: TodoItem, isChecked: Boolean) {
+    override fun onCheckedChanged(item: TodoItem, isChecked : Boolean) {
         val newStatus = if (isChecked) 1 else 0
         val newItem = item.copy(
             status = newStatus
