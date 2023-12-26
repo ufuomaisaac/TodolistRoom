@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         binding.recyclerView.adapter = adapter
 
 
+
         taskViewModel.list.observe(this, Observer { data ->
             todoList = data
             Log.d("Todolist101", todoList.toString())
@@ -71,7 +72,6 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         )
         taskViewModel.insert(newItem)
     }
-
 
 
      val swipeGesture = object : SwipeGesture(this) {
