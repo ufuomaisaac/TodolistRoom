@@ -1,4 +1,4 @@
-package com.example.todolist.ui
+package com.example.todolist.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,15 +10,18 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
-import com.example.todolist.data.db.TodoDataBase
-import com.example.todolist.data.db.entities.TodoItem
+import com.example.todolist.data.roomdb.TodoDataBase
+import com.example.todolist.data.roomdb.entities.TodoItem
 import com.example.todolist.data.repository.TodoRepository
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.ui.Dialog.AddDialogListener
 import com.example.todolist.ui.Dialog.BottomSheetDialog
 import com.example.todolist.ui.Dialog.EditDialogFragment
+import com.example.todolist.ui.SwipeGesture
+import com.example.todolist.ui.TaskViewModel
+import com.example.todolist.ui.TodoAdapter
+import com.example.todolist.ui.TodoViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import dagger.hilt.android.AndroidEntryPoint
 
 
 class MainActivity : AppCompatActivity(), TodoAdapter.Callback {

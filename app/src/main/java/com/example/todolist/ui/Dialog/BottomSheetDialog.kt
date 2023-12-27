@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.todolist.data.db.entities.TodoItem
+import com.example.todolist.data.roomdb.entities.TodoItem
 import com.example.todolist.databinding.NewTaskBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

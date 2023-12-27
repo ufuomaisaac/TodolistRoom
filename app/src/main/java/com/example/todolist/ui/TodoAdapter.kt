@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
-import com.example.todolist.data.db.entities.TodoItem
+import com.example.todolist.data.roomdb.entities.TodoItem
 
 class TodoAdapter(var taskViewModel: TaskViewModel) : RecyclerView.Adapter<TodoAdapter.viewHolder>() {
     var listTodo: List<TodoItem> = emptyList()

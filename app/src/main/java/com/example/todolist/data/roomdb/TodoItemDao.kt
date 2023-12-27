@@ -1,9 +1,8 @@
-package com.example.todolist.data.db
+package com.example.todolist.data.roomdb
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
-import com.example.todolist.data.db.entities.TodoItem
+import com.example.todolist.data.roomdb.entities.TodoItem
 
 @Dao
 interface TodoItemDao {

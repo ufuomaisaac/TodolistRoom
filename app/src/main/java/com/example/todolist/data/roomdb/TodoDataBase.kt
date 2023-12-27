@@ -1,10 +1,10 @@
-package com.example.todolist.data.db
+package com.example.todolist.data.roomdb
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.todolist.data.db.entities.TodoItem
+import com.example.todolist.data.roomdb.entities.TodoItem
 
 @Database(entities = [TodoItem::class], version = 1 )
 abstract class TodoDataBase : RoomDatabase() {

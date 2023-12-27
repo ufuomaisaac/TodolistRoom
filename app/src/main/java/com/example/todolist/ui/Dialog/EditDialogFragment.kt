@@ -6,7 +6,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.todolist.R
-import com.example.todolist.data.db.entities.TodoItem
+import com.example.todolist.data.roomdb.entities.TodoItem
 import com.example.todolist.ui.TaskViewModel
 
 class EditDialogFragment(private var taskViewModel: TaskViewModel, var currentItemTodo: TodoItem): DialogFragment() {
