@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -14,6 +16,7 @@ import com.example.todolist.data.roomdb.TodoDataBase
 import com.example.todolist.data.roomdb.entities.TodoItem
 import com.example.todolist.data.repository.TodoRepository
 import com.example.todolist.databinding.ActivityMainBinding
+import com.example.todolist.di.AppModule.Companion.dataStore
 import com.example.todolist.ui.Dialog.AddDialogListener
 import com.example.todolist.ui.Dialog.BottomSheetDialog
 import com.example.todolist.ui.Dialog.EditDialogFragment
@@ -22,6 +25,7 @@ import com.example.todolist.ui.TaskViewModel
 import com.example.todolist.ui.TodoAdapter
 import com.example.todolist.ui.TodoViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import java.util.prefs.Preferences
 
 
 class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
@@ -36,6 +40,8 @@ class MainActivity : AppCompatActivity(), TodoAdapter.Callback {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         appDataBase = TodoDataBase.getDatabase(this)
         val repository = TodoRepository(appDataBase)
