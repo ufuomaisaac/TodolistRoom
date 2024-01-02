@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
-class UserPreferenceRepository(private var context: Context) {
+class UserPreferenceRepository(private var context : Context) {
 
     companion object{
         var passwordPreferenceKey = stringPreferencesKey("password")

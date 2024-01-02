@@ -10,19 +10,20 @@ import com.example.todolist.data.datastore.UserPreferenceRepository
 
 
 
-/*private const val LAYOUT_PREFERENCE_NAME = "layout_preferences"
+private const val LAYOUT_PREFERENCE_NAME = "layout_preferences"
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
     name = LAYOUT_PREFERENCE_NAME
-)*/
+)
 
 
-object MyApp : Application() {
+class MyApp : Application() {
+    companion object {
+       lateinit var userPreferenceRepository: UserPreferenceRepository
 
-
-
+    }
     override fun onCreate() {
         super.onCreate()
+        userPreferenceRepository = UserPreferenceRepository(this)
+        Log.d("APPLICATION", "my app is working")
     }
-
-
 }

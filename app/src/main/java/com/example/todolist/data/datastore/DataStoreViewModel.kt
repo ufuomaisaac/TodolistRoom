@@ -20,9 +20,9 @@ class DataStoreViewModel(
         }
     }
 
-    var password = repository.password
+    var password: Flow<String> = repository.password
 
-    var userName = repository.userName
+    var userName: Flow<String> = repository.userName
 }
 
 
