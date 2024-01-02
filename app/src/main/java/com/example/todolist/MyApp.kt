@@ -15,7 +15,6 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
     name = LAYOUT_PREFERENCE_NAME
 )
 
-
 class MyApp : Application() {
     companion object {
        lateinit var userPreferenceRepository: UserPreferenceRepository
@@ -23,7 +22,7 @@ class MyApp : Application() {
     }
     override fun onCreate() {
         super.onCreate()
-        userPreferenceRepository = UserPreferenceRepository(this)
+        userPreferenceRepository = UserPreferenceRepository(dataStore = dataStore)
         Log.d("APPLICATION", "my app is working")
     }
 }

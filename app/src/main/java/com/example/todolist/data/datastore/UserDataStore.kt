@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
-class UserPreferenceRepository(private var context : Context) {
+class UserPreferenceRepository(private var dataStore: DataStore<Preferences>) {
 
     companion object{
         var passwordPreferenceKey = stringPreferencesKey("password")
@@ -26,18 +26,18 @@ class UserPreferenceRepository(private var context : Context) {
     }
 
 
-    val Context.dataStore by  preferencesDataStore(
+   /* val Context.dataStore by  preferencesDataStore(
         name = LAYOUT_PREFERENCE_NAME
-    )
+    )*/
      suspend fun saveUserDetails( password: String, userName: String) {
-        context.dataStore.edit {preference ->
+        dataStore.edit {preference ->
             preference[passwordPreferenceKey] = password
             preference[usernamePreferenceKey] = userName
         }
     }
 
     var password: Flow<String> =
-         context.dataStore.data
+         dataStore.data
              .catch() {
                  if(it is IOException) {
                      Log.d(TAG, "Error reading preference.", it )
@@ -49,7 +49,7 @@ class UserPreferenceRepository(private var context : Context) {
     }
 
     var userName: Flow<String> =
-        context.dataStore.data
+        dataStore.data
             .catch() {
                 if(it is IOException) {
                     Log.d(TAG, "Error reading preference.", it )
